@@ -27,6 +27,50 @@ var updateBestScore = function(){
 };
 
 var players = [];
-players.push( new Player(gameOptions).render(gameBoard) );
-players.push( new Player(gameOptions).render(gameBoard) );
+players.push( new Player(gameOptions) );
+players[0].render(gameBoard);
+//players.push( new Player(gameOptions).render(gameBoard) );
 
+var createEnemies = function(){
+  return d3.range(0,gameOptions.nEnemies).map(function(i){
+    var enemy = {};
+    enemy.id = i;
+    enemy.x = Math.random()*100;
+    enemy.y = Math.random()*100;
+    return enemy;
+  });
+};
+
+
+var render = function(enemy_data){
+  var enemies = gameBoard.selectAll('circle.enemy')
+            .data(enemy_data, function(d){
+              return d.id;
+            });
+
+  enemies.enter()
+     .append('svg:circle')
+       .attr('class', 'enemy')
+       .attr('cx', function(enemy) { return axes.x(enemy.x); })
+       .attr('cy', function(enemy) { return axes.y(enemy.y); })
+       .attr('r',10);
+
+  enemies.each(function(enemy){
+    enemy.x = Math.random()*100;
+    enemy.y = Math.random()*100;
+  });
+
+
+  enemies.transition()
+       .attr('class', 'enemy')
+       .attr('cx', function(enemy) { return axes.x(enemy.x); })
+       .attr('cy', function(enemy) { return axes.y(enemy.y); })
+       .attr('r',10);
+
+  enemies.exit()
+    .remove();
+};
+
+var enemies = createEnemies();
+
+render(enemies);

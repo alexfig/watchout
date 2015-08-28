@@ -12,7 +12,7 @@ Player.prototype.render = function(to) {
   this.el = to.append('svg:path')
             .attr('d', this.path)
             .attr('fill', this.fill);
-  this.transform({x: @gameOptions.width * 0.5, y: @gameOptions.height * 0.5});
+  this.transform({'x': this.gameOptions.width * 0.5, 'y': this.gameOptions.height * 0.5});
   this.setupDragging()
   return this;
 };
@@ -43,8 +43,8 @@ Player.prototype.transform =  function(opts){
   this.setY(opts.y || this.y);
 
   this.el.attr('transform',
-    "rotate(#{@angle},#{@getX()},#{@getY()}) " +
-    "translate(#{@getX()},#{@getY()})");
+    "rotate(" + this.angle + ","+ this.getX() + "," + this.getY() + ")" +
+    "translate(" + this.getX() + ","+this.getY()+")");
 };
 
 Player.prototype.moveAbsolute = function(x,y){
@@ -63,12 +63,12 @@ Player.prototype.moveRelative = function(dx,dy){
 };
 
 Player.prototype.setupDragging = function(){
-  var dragMove = fucntion(){
+  var dragMove = function(){
     this.moveRelative(d3.event.dx, d3.event.dy);
   };
   
   var drag = d3.behavior.drag()
-               .on('drag', dragMove);
+               .on('drag', dragMove.bind(this) );
 
   this.el.call(drag);
 };
