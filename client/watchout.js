@@ -85,6 +85,15 @@ var render = function(enemy_data) {
         collisionCount++;
         updateHiScore();
         gameStats.score = 0;
+
+        if (collisionCount >= 3) {
+          d3.select(".gameOver")
+            .transition()
+            .duration(1000)
+            .style('background-color', 'red')
+            .text("GAME OVER")
+            .style('display', 'block');
+        }
       }
     });
   };
