@@ -2,4 +2,36 @@
 
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
+body{
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #d0f0f0; 
+}
+.container{
+text-align:center;
+}
+svg {
+  border: solid grey 10px;
+  border-radius: 10px;
+  margin: 0 auto;
+  background-color: white;
+}
 
+.enemy {
+  -webkit-transform-origin: 50% 50%;
+  -webkit-animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  from    { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+
+.scoreboard{
+  margin-left: calc(50% - 100px);
+  margin-bottom: 10px;
+  text-align: center;
+  border: solid #ffa07a 5px;
+  width: 200px;
+  height: 75px;
+  background-color: white;
+}

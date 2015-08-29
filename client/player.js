@@ -1,7 +1,7 @@
 var Player = function(gameOptions){
   this.gameOptions = gameOptions;
   this.path = 'm-7.5,1.62413c0,-5.04095 4.08318,-9.12413 9.12414,-9.12413c5.04096,0 9.70345,5.53145 11.87586,9.12413c-2.02759,2.72372 -6.8349,9.12415 -11.87586,9.12415c-5.04096,0 -9.12414,-4.08318 -9.12414,-9.12415z';
-  this.fill = '#ff6600';
+  this.fill = 'red';
   this.x = 0;
   this.y = 0;
   this.angle = 0;
@@ -17,7 +17,6 @@ Player.prototype.render = function(to) {
   return this;
 };
 
-Player.prototype.getX = function(){ return this.x; };
 Player.prototype.setX = function(x){
   var minX = this.gameOptions.padding;
   var maxX = this.gameOptions.width - this.gameOptions.padding;
@@ -27,7 +26,6 @@ Player.prototype.setX = function(x){
   this.x = x;
 };
 
-Player.prototype.getY = function(){ return this.y; };
 Player.prototype.setY = function(y){
   var minY = this.gameOptions.padding;
   var maxY = this.gameOptions.height - this.gameOptions.padding;
@@ -43,21 +41,15 @@ Player.prototype.transform =  function(opts){
   this.setY(opts.y || this.y);
 
   this.el.attr('transform',
-    "rotate(" + this.angle + ","+ this.getX() + "," + this.getY() + ")" +
-    "translate(" + this.getX() + ","+this.getY()+")");
+    "rotate(" + this.angle + ","+ this.x + "," + this.y + ")" +
+    "translate(" + this.x + ","+this.y+")");
 };
 
-Player.prototype.moveAbsolute = function(x,y){
-  this.transform({
-    'x':x,
-    'y':y
-  });      
-};
 
 Player.prototype.moveRelative = function(dx,dy){
   this.transform({
-    'x': this.getX()+dx,
-    'y': this.getY()+dy,
+    'x': this.x +dx,
+    'y': this.y +dy,
     'angle': 360 * (Math.atan2(dy,dx)/(Math.PI*2))
   });      
 };
