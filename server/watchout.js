@@ -34,9 +34,6 @@ var render = function(enemy_data) {
       return d.id;
     });
 
-
-  
-
   enemies.enter()
     .append('svg:circle')
     .attr('class', 'enemy')
@@ -48,16 +45,6 @@ var render = function(enemy_data) {
     })
     .attr('r', 10)
     .attr('fill', 'blue');
-  // .attr('r',10)
-  //.attr('fill', 'blue');
-
-  // enemies.each(function(enemy) {
-  //   enemy.x = Math.random() * 100;
-  //   enemy.y = Math.random() * 100;
-  // });
-
-  //players[0] is the main player
-  // here we are checking if they collide:
 
   var checkCollision = function() {
     enemies.each(function(enemy, i) {
@@ -78,8 +65,8 @@ var render = function(enemy_data) {
         collisionCount++;
         updateHiScore();
         gameStats.score = 0;
-
-        socket.emit('collision', {});
+        debugger;
+        window.socket.emit('collision', {});
         if (collisionCount >= 3) {
 
         }
@@ -132,10 +119,13 @@ var updateOtherPlayers = function(otherPlayers){
     .attr('cy', function(player) {
       return player.y;
     });
+
+  newPlayers.exit()
+    .remove();
 };
 
 function init() {
-  var socket = io('http://10.6.28.252:8080');
+  window.socket = io('http://10.6.28.252:8080');
   socket.on('enemies', function(enemy_data){
     render(enemy_data.enemies);
   });

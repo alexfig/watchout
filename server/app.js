@@ -84,7 +84,13 @@ io.on('connection', function (socket) {
     playerPositions[socket.id] = playerPos;
     playerPositions[socket.id].id = socket.id;
   });
+  socket.on('collision', function (socket) {
+  console.log(global.collisionCount++);
 
+  if (global.collisionCount >= 3) {
+    io.emit('gameOver');
+  }
+  });
   setInterval(function(){
     var playerData = [];
     for(var id in playerPositions){
@@ -101,16 +107,8 @@ io.on('disconnect', function (socket) {
 
   delete playerPositions[socket.id];
 });
-io.on('collision', function (socket) {
-  console.log(global.collisionCount++);
-
-  if (global.collisionCount >= 3) {
-    io.emit('gameOver');
-  }
-});
 
 
-console.log(global.collisionCount);
 
 
 
